@@ -1,335 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindfulChat Admin Panel</title>
-  <!-- Linking our stylesheets: one for general styles, one specific to this admin panel -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="admin.css">
-  <!-- We're using Font Awesome for all the cool icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <meta name="description" content="A supportive mental health chatbot designed to help with stress, anxiety, and emotional well-being">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#3b82f6">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulChat Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="description" content="A supportive mental health chatbot designed to help with stress, anxiety, and emotional well-being">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#3b82f6">
 </head>
 <body>
-
-  <!-- This is the main container that wraps the entire admin interface -->
-  <div class="admin-container">
-
-    <!-- =========== HEADER =========== -->
+<div class="admin-container">
     <header class="admin-header">
-      <div class="logo">
-        <i class="fa-solid fa-brain"></i>
-        <h1>Sahara Admin</h1>
-      </div>
-      <div class="admin-user">
-        <span id="adminUsername">Admin</span> <!-- Username will be dynamically inserted here -->
-        <button id="logoutBtn" class="btn secondary-btn">Logout</button>
-      </div>
+        <div class="logo">
+            <i class="fa-solid fa-brain"></i>
+            <h1>Sahara Admin</h1>
+        </div>
+        <div class="admin-user">
+            <span id="adminUsername">Admin</span>
+            <button id="logoutBtn" class="btn secondary-btn">Logout</button>
+        </div>
     </header>
-
-    <!-- =========== MAIN CONTENT AREA =========== -->
     <div class="admin-content">
-
-      <!-- ----- Sidebar Navigation ----- -->
-      <aside class="admin-sidebar">
-        <nav>
-          <ul>
-            <!-- Each link corresponds to a management section in the main area -->
-            <li><a href="#dashboard" class="active" data-section="dashboard">Dashboard</a></li>
-            <li><a href="#users" data-section="users">Users</a></li>
-            <li><a href="#chats" data-section="chats">Chat Logs</a></li>
-            <li><a href="#resources" data-section="resources">Resources</a></li>
-            <li><a href="#counselors" data-section="counselors">Counselors</a></li>
-            <li><a href="#appointments" data-section="appointments">Appointments</a></li>
-            <li><a href="#forum" data-section="forum">Forum</a></li>
-          </ul>
-        </nav>
-      </aside>
-
-      <!-- ----- Main Viewport ----- -->
-      <main class="admin-main">
-
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="admin-section active">
-          <h2>Dashboard</h2>
-          <div class="stats-cards">
-            <!-- These cards will be filled with data fetched from the server -->
-            <div class="stat-card">
-              <h3>Total Users</h3>
-              <p id="totalUsers">Loading...</p>
-            </div>
-            <div class="stat-card">
-              <h3>Total Chats</h3>
-              <p id="totalChats">Loading...</p>
-            </div>
-            <div class="stat-card">
-              <h3>New Users (7 days)</h3>
-              <p id="newUsers">Loading...</p>
-            </div>
-             <div class="stat-card">
-              <h3>New Chats (7 days)</h3>
-              <p id="newChats">Loading...</p>
-            </div>
-          </div>
-          <div class="charts-grid">
-            <div class="chart-card">
-                <h3>Global Mood Distribution (All Users)</h3>
-                <canvas id="adminMoodChart"></canvas>
-            </div>
-            <div class="chart-card">
-                <h3>Global Sentiment Distribution (All Journals)</h3>
-                <canvas id="adminSentimentChart"></canvas>
-            </div>
-          </div>
-        </section>
-
-        <!-- User Management Section -->
-        <section id="users" class="admin-section">
-          <h2>User Management</h2>
-          <div class="admin-actions">
-            <input type="text" id="userSearchInput" placeholder="Search users...">
-            <button id="refreshUsersBtn" class="btn primary-btn">
-              <i class="fa-solid fa-refresh"></i> Refresh
-            </button>
-          </div>
-          <div class="table-container">
-            <table id="usersTable">
-              <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Created</th>
-                  <th>Admin</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="usersTableBody">
-                <!-- User data rows will be dynamically inserted here by admin.js -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- Chat Logs Section -->
-        <section id="chats" class="admin-section">
-          <h2>Chat Logs</h2>
-           <div class="admin-actions">
-            <input type="text" id="chatSearchInput" placeholder="Search chats by username...">
-            <button id="refreshChatsBtn" class="btn primary-btn">
-              <i class="fa-solid fa-refresh"></i> Refresh
-            </button>
-          </div>
-          <div class="table-container">
-            <table id="chatsTable">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>First Message</th>
-                  <th>Flagged</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="chatsTableBody">
-                <!-- Chat log rows will be dynamically inserted here -->
-              </tbody>
-            </table>
-          </div>
-           <div class="pagination" id="chatsPagination">
-             <!-- Pagination controls will be generated here -->
-           </div>
-        </section>
-        
-        <!-- Resource Management Section -->
-        <section id="resources" class="admin-section">
-            <h2>Resource Management</h2>
-            <div class="admin-actions">
-                <input type="text" id="resourceSearchInput" placeholder="Search resources by title, tag...">
-                <button id="refreshResourcesBtn" class="btn secondary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
-                <button id="createNewResourceBtn" class="btn primary-btn">
-                    <i class="fa-solid fa-plus"></i> Create New Resource
-                </button>
-            </div>
-            <div class="table-container">
-                <table id="resourcesTable">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Type</th>
-                            <th>Language</th>
-                            <th>Tags</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resourcesTableBody">
-                        <!-- Resource rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination" id="resourcesPagination"></div>
-        </section>
-
-        <!-- Counselor Management Section -->
-        <section id="counselors" class="admin-section">
-            <h2>Counselor Management</h2>
-            <div class="admin-actions">
-                <input type="text" id="counselorSearchInput" placeholder="Search counselors by name, email...">
-                <button id="refreshCounselorsBtn" class="btn secondary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
-                <button id="createNewCounselorBtn" class="btn primary-btn">
-                    <i class="fa-solid fa-plus"></i> Create New Counselor
-                </button>
-            </div>
-            <div class="table-container">
-                <table id="counselorsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Specialty</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="counselorsTableBody">
-                        <!-- Counselor rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination" id="counselorsPagination"></div>
-        </section>
-
-        <!-- Appointments Section -->
-        <section id="appointments" class="admin-section">
-            <h2>All Appointments</h2>
-            <div class="admin-actions">
-                <input type="text" id="appointmentSearchInput" placeholder="Search appointments by user, counselor...">
-                <button id="refreshAppointmentsBtn" class="btn primary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
-            </div>
-            <div class="table-container">
-                <table id="appointmentsTable">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Counselor</th>
-                            <th>Appointment Time</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="appointmentsTableBody">
-                        <!-- Appointment rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination" id="appointmentsPagination"></div>
-        </section>
-
-        <!-- Forum Moderation Section -->
-        <section id="forum" class="admin-section">
-            <h2>Forum Moderation</h2>
-            <div class="admin-actions">
-                <input type="text" id="forumSearchInput" placeholder="Search posts by title, author...">
-                <button id="refreshForumBtn" class="btn primary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
-            </div>
-            <div class="table-container">
-                <table id="forumPostsTable">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Created At</th>
-                            <th>Anonymous</th>
-                            <th>Actions</th>
-                            <th>Reports</th> <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="forumPostsTableBody">
-                        <!-- Forum post rows will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination" id="forumPagination"></div>
-        </section>
-
-      </main>
+        <aside class="admin-sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#dashboard" class="active" data-section="dashboard">Dashboard</a></li>
+                    <li><a href="#users" data-section="users">Users</a></li>
+                    <li><a href="#chats" data-section="chats">Chat Logs</a></li>
+                    <li><a href="#resources" data-section="resources">Resources</a></li>
+                    <li><a href="#counselors" data-section="counselors">Counselors</a></li>
+                    <li><a href="#appointments" data-section="appointments">Appointments</a></li>
+                    <li><a href="#forum" data-section="forum">Forum</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="admin-main">
+            <section id="dashboard" class="admin-section active">
+                <h2>Dashboard</h2>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p id="totalUsers">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Chats</h3>
+                        <p id="totalChats">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>New Users (7 days)</h3>
+                        <p id="newUsers">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>New Chats (7 days)</h3>
+                        <p id="newChats">Loading...</p>
+                    </div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Global Mood Distribution (All Users)</h3>
+                        <canvas id="adminMoodChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Global Sentiment Distribution (All Journals)</h3>
+                        <canvas id="adminSentimentChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            <section id="users" class="admin-section">
+                <h2>User Management</h2>
+                <div class="admin-actions">
+                    <input type="text" id="userSearchInput" placeholder="Search users...">
+                    <button id="refreshUsersBtn" class="btn primary-btn">
+                        <i class="fa-solid fa-refresh"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Created</th>
+                                <th>Admin</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="chats" class="admin-section">
+                <h2>Chat Logs</h2>
+                <div class="admin-actions">
+                    <input type="text" id="chatSearchInput" placeholder="Search chats by username...">
+                    <button id="refreshChatsBtn" class="btn primary-btn">
+                        <i class="fa-solid fa-refresh"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="chatsTable">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Date</th>
+                                <th>First Message</th>
+                                <th>Flagged</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="chatsTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="chatsPagination"></div>
+            </section>
+            <section id="resources" class="admin-section">
+                <h2>Resource Management</h2>
+                <div class="admin-actions">
+                    <input type="text" id="resourceSearchInput" placeholder="Search resources by title, tag...">
+                    <button id="refreshResourcesBtn" class="btn secondary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
+                    <button id="createNewResourceBtn" class="btn primary-btn">
+                        <i class="fa-solid fa-plus"></i> Create New Resource
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="resourcesTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Language</th>
+                                <th>Tags</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resourcesTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="resourcesPagination"></div>
+            </section>
+            <section id="counselors" class="admin-section">
+                <h2>Counselor Management</h2>
+                <div class="admin-actions">
+                    <input type="text" id="counselorSearchInput" placeholder="Search counselors by name, email...">
+                    <button id="refreshCounselorsBtn" class="btn secondary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
+                    <button id="createNewCounselorBtn" class="btn primary-btn">
+                        <i class="fa-solid fa-plus"></i> Create New Counselor
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="counselorsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Specialty</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="counselorsTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="counselorsPagination"></div>
+            </section>
+            <section id="appointments" class="admin-section">
+                <h2>All Appointments</h2>
+                <div class="admin-actions">
+                    <input type="text" id="appointmentSearchInput" placeholder="Search appointments by user, counselor...">
+                    <button id="refreshAppointmentsBtn" class="btn primary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
+                </div>
+                <div class="table-container">
+                    <table id="appointmentsTable">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Counselor</th>
+                                <th>Appointment Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="appointmentsPagination"></div>
+            </section>
+            <section id="forum" class="admin-section">
+                <h2>Forum Moderation</h2>
+                <div class="admin-actions">
+                    <input type="text" id="forumSearchInput" placeholder="Search posts by title, author...">
+                    <button id="refreshForumBtn" class="btn primary-btn"><i class="fa-solid fa-refresh"></i> Refresh</button>
+                </div>
+                <div class="table-container">
+                    <table id="forumPostsTable">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Created At</th>
+                                <th>Anonymous</th>
+                                <th>Reports</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forumPostsTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="forumPagination"></div>
+            </section>
+        </main>
     </div>
-  </div>
-
-  <!-- =========== MODALS (Pop-ups) =========== -->
-  <!-- These are hidden by default and shown by JavaScript when needed -->
-
-  <!-- User Edit Modal -->
-  <div id="userEditModal" class="modal hidden">
+</div>
+<div id="userEditModal" class="modal hidden">
     <div class="modal-content">
-      <button class="close-btn" id="closeUserModalBtn"><i class="fa-solid fa-times"></i></button>
-      <h2>Edit User</h2>
-      <form id="userEditForm">
-        <input type="hidden" id="editUserId"> <!-- Hidden field to store the ID of the user being edited -->
-        <div class="form-group">
-          <label for="editUsername">Username</label>
-          <input type="text" id="editUsername" required>
-        </div>
-        <div class="form-group">
-          <label for="editEmail">Email</label>
-          <input type="email" id="editEmail" required>
-        </div>
-        <div class="form-group checkbox-group">
-          <label for="editIsAdmin">
-            <input type="checkbox" id="editIsAdmin">
-            Administrator
-          </label>
-        </div>
-        <button type="submit" class="btn primary-btn">Save Changes</button>
-      </form>
+        <button class="close-btn" id="closeUserModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2>Edit User</h2>
+        <form id="userEditForm">
+            <input type="hidden" id="editUserId">
+            <div class="form-group">
+                <label for="editUsername">Username</label>
+                <input type="text" id="editUsername" required>
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" required>
+            </div>
+            <div class="form-group checkbox-group">
+                <label for="editIsAdmin">
+                    <input type="checkbox" id="editIsAdmin">
+                    Administrator
+                </label>
+            </div>
+            <button type="submit" class="btn primary-btn">Save Changes</button>
+        </form>
     </div>
-  </div>
-  
-  <!-- Chat Details Modal -->
-  <div id="chatDetailModal" class="modal hidden">
+</div>
+<div id="chatDetailModal" class="modal hidden">
     <div class="modal-content">
-      <button class="close-btn" id="closeChatModalBtn"><i class="fa-solid fa-times"></i></button>
-      <div class="chat-detail-header">
-        <h2>Chat Details</h2>
-        <p><strong>User:</strong> <span id="chatDetailUsername"></span></p>
-        <p><strong>Date:</strong> <span id="chatDetailDate"></span></p>
-      </div>
-      <div class="chat-messages-container">
-        <div class="form-group">
-          <label>User Message</label>
-          <p id="chatDetailUserMessage" class="message-content"></p>
+        <button class="close-btn" id="closeChatModalBtn"><i class="fa-solid fa-times"></i></button>
+        <div class="chat-detail-header">
+            <h2>Chat Details</h2>
+            <p><strong>User:</strong> <span id="chatDetailUsername"></span></p>
+            <p><strong>Date:</strong> <span id="chatDetailDate"></span></p>
         </div>
-        <div class="form-group">
-          <label>Bot Response</label>
-          <p id="chatDetailBotResponse" class="message-content"></p>
+        <div class="chat-messages-container">
+            <div class="form-group">
+                <label>User Message</label>
+                <p id="chatDetailUserMessage" class="message-content"></p>
+            </div>
+            <div class="form-group">
+                <label>Bot Response</label>
+                <p id="chatDetailBotResponse" class="message-content"></p>
+            </div>
+            <div class="form-group">
+                <label>Detected Sentiment / Confidence</label>
+                <p><span id="chatDetailSentiment"></span> @ <span id="chatDetailConfidence"></span>%</p>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Detected Sentiment / Confidence</label>
-          <p><span id="chatDetailSentiment"></span> @ <span id="chatDetailConfidence"></span>%</p>
+        <div class="chat-actions">
+            <div class="form-group">
+                <label for="chatDetailFlag">Manually Flag As:</label>
+                <select id="chatDetailFlag">
+                    <option value="">(None)</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="anxiety">Anxiety</option>
+                    <option value="depression">Depression</option>
+                    <option value="stress">Stress</option>
+                    <option value="suicidal">Suicidal</option>
+                </select>
+            </div>
+            <button id="saveChatDetailsBtn" class="btn primary-btn">Save Flag</button>
         </div>
-      </div>
-      <div class="chat-actions">
-        <div class="form-group">
-          <label for="chatDetailFlag">Manually Flag As:</label>
-          <select id="chatDetailFlag">
-            <option value="">(None)</option>
-            <option value="neutral">Neutral</option>
-            <option value="anxiety">Anxiety</option>
-            <option value="depression">Depression</option>
-            <option value="stress">Stress</option>
-            <option value="suicidal">Suicidal</option>
-          </select>
-        </div>
-        <button id="saveChatDetailsBtn" class="btn primary-btn">Save Flag</button>
-      </div>
     </div>
-  </div>
-
-  <!-- Resource Create/Edit Modal -->
-  <div id="resourceEditModal" class="modal hidden">
+</div>
+<div id="resourceEditModal" class="modal hidden">
     <div class="modal-content">
         <button class="close-btn" id="closeResourceModalBtn"><i class="fa-solid fa-times"></i></button>
         <h2 id="resourceModalTitle">Create Resource</h2>
@@ -379,10 +327,8 @@
             <button type="submit" class="btn primary-btn">Save Resource</button>
         </form>
     </div>
-  </div>
-
-  <!-- Counselor Create/Edit Modal -->
-  <div id="counselorEditModal" class="modal hidden">
+</div>
+<div id="counselorEditModal" class="modal hidden">
     <div class="modal-content">
         <button class="close-btn" id="closeCounselorModalBtn"><i class="fa-solid fa-times"></i></button>
         <h2 id="counselorModalTitle">Create Counselor</h2>
@@ -414,10 +360,8 @@
             <button type="submit" class="btn primary-btn">Save Counselor</button>
         </form>
     </div>
-  </div>
-
-  <!-- Appointment Status Edit Modal -->
-  <div id="appointmentStatusModal" class="modal hidden">
+</div>
+<div id="appointmentStatusModal" class="modal hidden">
     <div class="modal-content" style="max-width: 400px;">
         <button class="close-btn" id="closeAppointmentStatusModalBtn"><i class="fa-solid fa-times"></i></button>
         <h2>Change Appointment Status</h2>
@@ -436,9 +380,7 @@
             <button type="submit" class="btn primary-btn">Update Status</button>
         </form>
     </div>
-  </div>
-
-  <!-- The JavaScript file that powers all the interactivity on this page -->
-  <script src="admin.js"></script>
+</div>
+<script src="admin.js"></script>
 </body>
 </html>
