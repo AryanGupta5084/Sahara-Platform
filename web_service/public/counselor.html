@@ -4,90 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Counselor Dashboard | Sahara</title>
-    <!-- We're reusing the same stylesheets from the admin panel for a consistent look and feel. -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="admin.css">
-    <!-- The Socket.IO client library is essential for real-time chat functionality. -->
     <script src="/socket.io/socket.io.js"></script>
     <meta name="description" content="A supportive mental health chatbot designed to help with stress, anxiety, and emotional well-being">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#3b82f6">
 </head>
 <body>
-    <!-- Main container for the entire dashboard layout. -->
-    <div class="admin-container">
-        
-        <!-- ==================== HEADER ==================== -->
-        <header class="admin-header">
-            <div class="logo">
-                <i class="fa-solid fa-brain"></i>
-                <h1>Counselor Dashboard</h1>
-            </div>
-            <div class="admin-user">
-                <!-- The counselor's name will be dynamically inserted here by JavaScript. -->
-                <span id="counselorUsername">Counselor</span>
-                <button id="logoutBtn" class="btn secondary-btn">Logout</button>
-            </div>
-        </header>
-
-        <!-- ==================== MAIN CONTENT ==================== -->
-        <!-- The main area of the dashboard, focused on displaying appointments. -->
-        <main class="admin-main" style="padding: 2rem;">
-            <section id="profile-management" class="admin-section active" style="margin-bottom: 2rem;">
-                <h2>Manage Your Profile & Availability</h2>
-                <div class="profile-details">
-                    <p><strong>Specialty:</strong> <span id="counselorSpecialty">Loading...</span></p>
-                    <p><strong>Bio:</strong> <span id="counselorBio">Loading...</span></p>
-                </div>
-                <form id="availabilityForm">
-                    <h3>Set Your Weekly Availability</h3>
-                    <div id="availabilityContainer">
-                        </div>
-                    <button type="submit" class="btn primary-btn">Save Changes</button>
-                </form>
-            </section>
-            <h2>Your Upcoming Appointments</h2>
-            <div id="appointments-container" class="table-container">
-                <table id="appointmentsTable">
-                    <thead>
-                        <tr>
-                            <th>Client Name</th>
-                            <th>Appointment Time</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="appointmentsTableBody">
-                        <!-- Appointment data will be loaded and rendered here by counselor.js -->
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
-
-    <!-- ==================== LIVE CHAT MODAL ==================== -->
-    <!-- This modal is hidden by default and will pop up when a counselor starts a live session. -->
-    <div id="liveChatModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeLiveChatModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2 id="liveChatHeader">Live Session</h2>
-            
-            <!-- This container will hold all the chat messages. -->
-            <div class="exercise-chat-container" style="height: 60vh;">
-                <div id="liveChatMessages">
-                    <!-- Messages will be appended here in real-time. -->
-                </div>
-            </div>
-            
-            <!-- The form for sending new messages. -->
-            <form id="liveChatForm" class="exercise-input-form">
-                <input type="text" id="liveChatMessageInput" placeholder="Type your message..." required autocomplete="off">
-                <button type="submit" class="btn primary-btn">Send</button>
-            </form>
+<div class="admin-container">
+    <header class="admin-header">
+        <div class="logo">
+            <i class="fa-solid fa-brain"></i>
+            <h1>Counselor Dashboard</h1>
         </div>
+        <div class="admin-user">
+            <span id="counselorUsername">Counselor</span>
+            <button id="logoutBtn" class="btn secondary-btn">Logout</button>
+        </div>
+    </header>
+    <main class="admin-main" style="padding: 2rem;">
+        <section id="profile-management" class="admin-section active" style="margin-bottom: 2rem;">
+            <h2>Manage Your Profile & Availability</h2>
+            <div class="profile-details">
+                <p><strong>Specialty:</strong> <span id="counselorSpecialty">Loading...</span></p>
+                <p><strong>Bio:</strong> <span id="counselorBio">Loading...</span></p>
+            </div>
+            <form id="availabilityForm">
+                <h3>Set Your Weekly Availability</h3>
+                <div id="availabilityContainer"></div>
+                <button type="submit" class="btn primary-btn">Save Changes</button>
+            </form>
+        </section>
+        <h2>Your Upcoming Appointments</h2>
+        <div id="appointments-container" class="table-container">
+            <table id="appointmentsTable">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Appointment Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentsTableBody"></tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<div id="liveChatModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeLiveChatModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2 id="liveChatHeader">Live Session</h2>
+        <div class="exercise-chat-container" style="height: 60vh;">
+            <div id="liveChatMessages"></div>
+        </div>
+        <form id="liveChatForm" class="exercise-input-form">
+            <input type="text" id="liveChatMessageInput" placeholder="Type your message..." required autocomplete="off">
+            <button type="submit" class="btn primary-btn">Send</button>
+        </form>
     </div>
-
-    <!-- The JavaScript file that brings this page to life. -->
-    <script src="counselor.js"></script>
+</div>
+<script src="counselor.js"></script>
 </body>
 </html>
