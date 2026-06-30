@@ -1,13 +1,5 @@
-/**
- * utils/seedScreeningTests.js
- * * This is a database "seeder" script. It runs on server startup and ensures
- * * that our essential screening questionnaires (PHQ-9, GAD-7) exist in the database.
- * * Using "updateOne" with "upsert: true" is a safe way to create them if they
- * * don't exist, or do nothing if they already do, preventing duplicates.
- */
 const ScreeningTest = require('../models/ScreeningTest');
 
-// --- Standard PHQ-9 Questionnaire Data ---
 const phq9 = {
     testKey: 'phq-9',
     fullName: 'Patient Health Questionnaire (PHQ-9)',
@@ -38,7 +30,6 @@ const phq9 = {
     ]
 };
 
-// --- Standard GAD-7 Questionnaire Data ---
 const gad7 = {
     testKey: 'gad-7',
     fullName: 'Generalized Anxiety Disorder (GAD-7)',
@@ -66,11 +57,8 @@ const gad7 = {
     ]
 };
 
-// --- Seeder Function ---
 const seedTests = async () => {
     try {
-        // Use updateOne with upsert:true. This will CREATE the doc if testKey doesn't exist,
-        // or just update it if it does. It's a safe way to ensure data is present.
         await ScreeningTest.updateOne({ testKey: phq9.testKey }, phq9, { upsert: true });
         await ScreeningTest.updateOne({ testKey: gad7.testKey }, gad7, { upsert: true });
         console.log('✅ Screening tests (PHQ-9, GAD-7) seeded successfully.');
