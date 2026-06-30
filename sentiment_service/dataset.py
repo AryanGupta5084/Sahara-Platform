@@ -1,6 +1,5 @@
 import pandas as pd
 
-# Provided emotion categories and their corresponding text samples
 emotions = {
     "neutral": [
         "I'm just going about my day as usual.",
@@ -259,13 +258,10 @@ emotions = {
     ]
 }
 
-# Flatten the dictionary into a list of (text, emotion) tuples
 data = [(text, emotion) for emotion, texts in emotions.items() for text in texts]
 
-# Create DataFrame
 df = pd.DataFrame(data, columns=['text', 'emotion'])
 
-# Print dataset statistics
 print("\nDataset Statistics:")
 print("-" * 50)
 print("Total samples:", len(df))
@@ -274,6 +270,5 @@ print(df['emotion'].value_counts())
 print("\nClass distribution (%):")
 print(df['emotion'].value_counts(normalize=True) * 100)
 
-# Save to CSV
 df.to_csv('sentiment_dataset.csv', index=False)
 print("\nDataset saved to sentiment_dataset.csv")
