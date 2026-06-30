@@ -1,21 +1,21 @@
 {
-    "name": "Sahara Mental Wellness",
-    "short_name": "Sahara",
-    "start_url": "/index.html",
-    "display": "standalone",
-    "background_color": "#1a1a2e",
-    "theme_color": "#3b82f6",
-    "description": "A supportive mental health companion to help you be heard.",
-    "icons": [
-        {
-            "src": "/images/icon-192.png",
-            "type": "image/png",
-            "sizes": "192x192"
-        },
-        {
-            "src": "/images/icon-512.png",
-            "type": "image/png",
-            "sizes": "512x512"
-        }
-    ]
+  "name": "Sahara Mental Wellness",
+  "short_name": "Sahara",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#3b82f6",
+  "description": "A supportive mental health companion to help you be heard.",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
 }
