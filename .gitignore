@@ -1,38 +1,23 @@
-# --- Security & Sensitive Files ---
-# Never commit sensitive files, environment variables, or private keys.
 .env*
-config/*.json
-config/*.js
+config/*.json*
+*config/*.js
 *.pem
 *.key
 *.crt
 *.p12
 *.pfx
-
-# --- Database Files ---
-# Don't commit local database files or dumps.
 *.sqlite
 *.db
 *.sqlite3
 dump.rdb
-
-# --- IDE & Editor Configuration ---
-# Ignore user-specific settings from code editors to avoid conflicts.
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
-
-# --- Dependencies & Build Artifacts ---
-# Dependencies are installed via a package manager, and build outputs are generated.
-# There's no need to track them in source control.
 node_modules/
 dist/
 build/
 coverage/
-
-# --- Python-specific ---
-# Ignore Python cache files, virtual environments, and large model artifacts.
 __pycache__/
 *.pyc
 *.pyo
@@ -40,16 +25,10 @@ __pycache__/
 #sentiment_service/model/best_model/
 #sentiment_service/model/tokenizer.json
 #sentiment_service/model/model_config.json
-
-# --- Logs ---
-# Log files are generated during runtime and can become very large.
-*.log
-npm-debug.log
-yarn-debug.log*
-yarn-error.log*
-
-# --- Miscellaneous ---
-# Ignore temporary files, backups, and system files.
+*.log*
+*npm-debug.log*
+*yarn-debug.log*
+*yarn-error.log*
 *.bak
 *.swp
 *.tmp
