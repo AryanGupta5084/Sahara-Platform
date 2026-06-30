@@ -1,114 +1,83 @@
-/**
- * public/styles.css
- * * This is the main stylesheet for the Sahara web application. It defines the visual identity,
- * * layout, and responsiveness of the user-facing interface. It uses a modern, dark theme
- * * with blue accents, and relies heavily on CSS variables for easy theming and maintenance.
- */
-
-/* ===================================================================================
-   --- 1. ROOT VARIABLES & GLOBAL STYLES ---
-   Here we define the color palette and foundational styles that apply to the entire site.
-   Using CSS variables (custom properties) makes it incredibly easy to change the
-   theme of the application in one place.
-   =================================================================================== */
-
 :root {
-  /* Color Palette */
-  --bg-primary: #0a1929;      /* Deep navy - main background */
-  --bg-secondary: #101f33;    /* Slightly lighter navy - for cards, modals */
-  --text-primary: #edf2f7;    /* Off-white - for primary text */
-  --text-secondary: #a0aec0;  /* Light gray - for secondary text, placeholders */
-  --accent-primary: #3b82f6;  /* Bright blue - for buttons, links, highlights */
-  --accent-secondary: #60a5fa;/* Lighter blue - for hover effects */
-  --error: #ef4444;           /* Red - for error messages, delete buttons */
-  --success: #10b981;         /* Green - for success notifications */
-  --warning: #f59e0b;         /* Amber/Yellow - for warnings, urgent messages */
-  
-  /* Sizing & Effects */
-  --border-radius: 8px;       /* Consistent rounded corners for all elements */
-  --transition-speed: 0.3s;   /* Standard speed for all animations and transitions */
+    --bg-primary: #0a1929;
+    --bg-secondary: #101f33;
+    --text-primary: #edf2f7;
+    --text-secondary: #a0aec0;
+    --accent-primary: #3b82f6;
+    --accent-secondary: #60a5fa;
+    --error: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
 }
 
-/* Universal box-sizing reset. This makes layout math much more predictable. */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Import the 'Nunito' font from Google Fonts for a friendly, rounded look. */
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap');
 
-/* Apply the base font to the body and all form elements for a consistent look. */
 body, html, input, button, select, textarea {
-  font-family: 'Nunito', Arial, sans-serif;
-  font-size: 16px;
+    font-family: 'Nunito', Arial, sans-serif;
+    font-size: 16px;
 }
 
-/* Basic body setup. */
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
-/* A simple utility class to hide elements completely. */
 .hidden {
-  display: none !important;
+    display: none !important;
 }
 
-/* The main container that centers the content and sets a max width. */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
-
-/* ===================================================================================
-   --- 2. HEADER & NAVIGATION ---
-   Styles for the top bar of the application, including the logo and user menu.
-   =================================================================================== */
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .logo i {
-  font-size: 1.5rem;
-  color: var(--accent-primary);
+    font-size: 1.5rem;
+    color: var(--accent-primary);
 }
 
 .logo h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  /* A cool gradient effect for the logo text. */
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* This container holds all the controls on the right side of the header. */
 .header-controls {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-/* Style for the circular icon buttons in the header (e.g., Resources). */
 .header-icon-btn {
     background-color: var(--bg-secondary);
     border: none;
@@ -129,61 +98,58 @@ header {
     color: white;
 }
 
-/* User menu styling */
 .user-menu {
-  position: relative; /* This is the anchor for the absolute-positioned dropdown. */
+    position: relative;
 }
 
 .user-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
 }
 
 .user-button:hover {
-  background-color: rgba(59, 130, 246, 0.1); /* A subtle blue glow on hover */
+    background-color: rgba(59, 130, 246, 0.1);
 }
 
-/* The dropdown menu itself. It's hidden by default. */
 .dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  margin-top: 0.5rem;
-  background-color: var(--bg-secondary);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  min-width: 150px;
-  z-index: 10; /* Ensures it appears on top of other content. */
-  display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    z-index: 10;
+    display: none;
 }
 
-/* The .active class (toggled by JavaScript) makes the dropdown visible. */
 .dropdown-menu.active {
-  display: block;
+    display: block;
 }
 
 .dropdown-menu button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  text-align: left;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background-color var(--transition-speed);
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
 }
 
 .dropdown-menu button:hover {
-  background-color: rgba(59, 130, 246, 0.1);
+    background-color: rgba(59, 130, 246, 0.1);
 }
 
 .dropdown-divider {
@@ -199,198 +165,175 @@ header {
     color: var(--text-secondary);
 }
 
-/* ===================================================================================
-   --- 3. MAIN CONTENT & CHAT INTERFACE ---
-   Styles for the core chat window and user input area.
-   =================================================================================== */
-
 main {
-  flex: 1; /* This makes the main area grow to fill available space. */
-  display: flex;
-  position: relative;
+    flex: 1;
+    display: flex;
+    position: relative;
 }
 
 .chat-container {
-  display: flex;
-  flex-direction: column;
-  /* The height is calculated to fill the viewport minus the header and footer. */
-  height: calc(100vh - 150px);
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 150px);
+    width: 100%;
 }
 
 .chat-messages {
-  flex: 1;
-  overflow-y: auto; /* Enables scrolling for the message history. */
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-/* Base style for all chat messages. */
 .message {
-  display: flex;
-  flex-direction: column;
-  max-width: 80%;
-  animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Aligns user messages to the right. */
 .user-message {
-  align-self: flex-end;
+    align-self: flex-end;
 }
 
-/* Aligns bot messages to the left. */
 .bot-message {
-  align-self: flex-start;
+    align-self: flex-start;
 }
 
 .message-content {
-  padding: 0.75rem 1rem;
-  border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
 }
 
 .user-message .message-content {
-  background-color: var(--accent-primary);
-  border-bottom-right-radius: 0; /* Creates the "speech bubble" tail. */
+    background-color: var(--accent-primary);
+    border-bottom-right-radius: 0;
 }
 
 .bot-message .message-content {
-  background-color: var(--bg-secondary);
-  border-bottom-left-radius: 0;
+    background-color: var(--bg-secondary);
+    border-bottom-left-radius: 0;
 }
 
 .message-content p {
-  margin: 0;
-  word-wrap: break-word; /* Prevents long words from overflowing. */
+    margin: 0;
+    word-wrap: break-word;
 }
 
 .message-time {
-  margin-top: 0.25rem;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  align-self: flex-end;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    align-self: flex-end;
 }
 
 .bot-message .message-time {
-  align-self: flex-start;
+    align-self: flex-start;
 }
 
-/* Special style for messages flagged as urgent. */
 .message.urgent .message-content {
-  border-left: 4px solid var(--warning);
+    border-left: 4px solid var(--warning);
 }
 
-/* The container for the message input box and send button. */
 .chat-input-container {
-  padding: 1rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #messageForm {
-  display: flex;
-  align-items: center; /* Vertically align items */
-  gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 #messageInput {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  background-color: var(--bg-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  color: var(--text-primary);
-  resize: none; /* Disables manual resizing of the textarea. */
-  transition: border-color var(--transition-speed);
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    resize: none;
+    transition: border-color var(--transition-speed);
 }
 
 #messageInput:focus {
-  outline: none;
-  border-color: var(--accent-primary);
+    outline: none;
+    border-color: var(--accent-primary);
 }
 
 #sendButton {
-  background-color: var(--accent-primary);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  width: 42px; /* Adjusted for better proportions */
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color var(--transition-speed), transform var(--transition-speed);
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
 #sendButton:hover {
-  background-color: var(--accent-secondary);
+    background-color: var(--accent-secondary);
 }
 
 #sendButton:active {
-  transform: scale(0.95);
+    transform: scale(0.95);
 }
 
-/* Styles for icon buttons inside the chat input (mic, tts) */
 .chat-icon-btn {
-  background-color: transparent;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  cursor: pointer;
-  padding: 0 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease;
+    background-color: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
 }
 
 .chat-icon-btn:hover {
-  color: var(--accent-primary);
+    color: var(--accent-primary);
 }
 
 .chat-icon-btn.active {
-  color: var(--success); /* Green when mic is listening or TTS is on */
+    color: var(--success);
 }
 
-/* ===================================================================================
-   --- 4. MODALS & FORMS ---
-   Generic styles for all pop-up modals and the forms within them.
-   =================================================================================== */
-
 .auth-container, .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
 .auth-box, .modal-content {
-  background-color: var(--bg-secondary);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-  max-height: 80vh; /* Prevents modal from being too tall on small screens */
-  overflow-y: auto;
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .modal-content.large {
@@ -399,108 +342,100 @@ main {
 }
 
 .close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: color var(--transition-speed);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: color var(--transition-speed);
 }
 
 .close-btn:hover {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
-/* Base styles for all forms */
 .auth-form h2 {
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: var(--accent-primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--accent-primary);
 }
 
 .form-group {
-  margin-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
 }
 
 .form-group input, .form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--bg-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  color: var(--text-primary);
-  transition: border-color var(--transition-speed);
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    transition: border-color var(--transition-speed);
 }
 
 .form-group input:focus, .form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent-primary);
+    outline: none;
+    border-color: var(--accent-primary);
 }
 
 .form-group small {
-  display: block;
-  margin-top: 0.25rem;
-  color: var(--text-secondary);
-  font-size: 0.75rem;
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
 }
 
-/* Base button styles */
 .btn {
-  display: inline-block; /* Changed for more flexibility */
-  width: auto; /* Let the button size to its content */
-  padding: 0.75rem 1.5rem; /* More standard padding */
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: 600;
-  text-align: center;
-  transition: background-color var(--transition-speed), transform var(--transition-speed);
+    display: inline-block;
+    width: auto;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
 .btn:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
 
 .primary-btn {
-  background-color: var(--accent-primary);
-  color: white;
+    background-color: var(--accent-primary);
+    color: white;
 }
 
 .primary-btn:hover {
-  background-color: var(--accent-secondary);
+    background-color: var(--accent-secondary);
 }
 
 .form-switch {
-  margin-top: 1rem;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
+    margin-top: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
 }
 
 .form-switch a {
-  color: var(--accent-primary);
-  text-decoration: none;
+    color: var(--accent-primary);
+    text-decoration: none;
 }
 
 .form-switch a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
-/* ===================================================================================
-   --- 5. FEATURE-SPECIFIC STYLES ---
-   Styles for the various modals and their unique content, like Resources, Booking, etc.
-   =================================================================================== */
-
-/* --- Resources Modal --- */
 .resources-filters {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
@@ -514,12 +449,11 @@ main {
 
 .resources-grid {
     display: grid;
-    /* This creates a responsive grid that adds more columns as space becomes available. */
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
     max-height: 60vh;
     overflow-y: auto;
-    padding-right: 10px; /* To prevent content from hiding under the scrollbar */
+    padding-right: 10px;
 }
 
 .resource-card {
@@ -535,7 +469,7 @@ main {
 }
 
 .resource-card:hover {
-    transform: translateY(-5px); /* Nice little lift effect on hover */
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
@@ -561,7 +495,7 @@ main {
 
 .resource-card-body {
     padding: 1.25rem;
-    flex-grow: 1; /* Allows this section to grow, pushing the footer down */
+    flex-grow: 1;
 }
 
 .resource-card-description {
@@ -587,7 +521,6 @@ main {
     font-weight: 500;
 }
 
-/* --- Booking Modal --- */
 .booking-step {
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -603,6 +536,7 @@ main {
     align-items: center;
     gap: 0.5rem;
 }
+
 .back-btn:hover {
     color: var(--accent-primary);
 }
@@ -642,10 +576,10 @@ main {
     min-height: 50px;
 }
 
-/* Slot Selection */
 .slot-selection-controls {
     margin: 1rem 0;
 }
+
 #slot-date-picker {
     padding: 0.5rem;
     background-color: var(--bg-secondary);
@@ -674,17 +608,18 @@ main {
     border-radius: var(--border-radius);
     transition: all var(--transition-speed);
 }
+
 .slot-btn:hover {
     background-color: var(--accent-primary);
     color: white;
 }
+
 .slot-btn:disabled {
     border-color: var(--text-secondary);
     color: var(--text-secondary);
     cursor: not-allowed;
 }
 
-/* Confirmation and 'My Appointments' styles */
 .booking-summary, #myAppointmentsContainer {
     background-color: var(--bg-secondary);
     padding: 1.5rem;
@@ -708,118 +643,141 @@ main {
     padding: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .appointment-item:last-child {
     border-bottom: none;
 }
+
 .appointment-item-actions {
     margin-top: 0.5rem;
     display: flex;
     gap: 0.5rem;
 }
 
-/* --- Journal Modal --- */
 .journal-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
 }
 
 .journal-entry-section, .journal-progress-section {
-  padding: 1.5rem;
-  background-color: var(--bg-primary);
-  border-radius: var(--border-radius);
+    padding: 1.5rem;
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius);
 }
 
 .journal-entry-section h3, .journal-progress-section h3 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-/* Mood Selector Emojis */
 .mood-selector {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
 }
+
 .mood-option {
-  font-size: 2.5rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  filter: grayscale(80%);
-  opacity: 0.6;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: grayscale(80%);
+    opacity: 0.6;
 }
+
 .mood-option:hover {
-  transform: scale(1.2);
-  filter: grayscale(0%);
-  opacity: 1;
+    transform: scale(1.2);
+    filter: grayscale(0%);
+    opacity: 1;
 }
+
 .mood-option.selected {
-  transform: scale(1.25);
-  filter: grayscale(0%);
-  opacity: 1;
+    transform: scale(1.25);
+    filter: grayscale(0%);
+    opacity: 1;
 }
 
-/* Mood Calendar */
 .calendar-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
+
 .calendar-nav button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-secondary);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
 }
+
 .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  text-align: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
 }
+
 .calendar-day-header {
-  font-weight: bold;
-  color: var(--text-secondary);
-  font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
 }
+
 .calendar-day {
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 0.9rem;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.9rem;
 }
 
-/* These classes are applied by JS to color the calendar days based on mood. */
-.mood-awful { background-color: var(--error); color: white; }
-.mood-bad { background-color: var(--warning); color: white; }
-.mood-meh { background-color: var(--text-secondary); color: white; }
-.mood-good { background-color: var(--success); color: white; }
-.mood-great { background-color: var(--accent-primary); color: white; }
+.mood-awful {
+    background-color: var(--error);
+    color: white;
+}
 
-/* Journal Streak indicator in the dropdown */
+.mood-bad {
+    background-color: var(--warning);
+    color: white;
+}
+
+.mood-meh {
+    background-color: var(--text-secondary);
+    color: white;
+}
+
+.mood-good {
+    background-color: var(--success);
+    color: white;
+}
+
+.mood-great {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
 .streak-indicator {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: rgba(245, 158, 11, 0.1); /* Light amber background */
+    background-color: rgba(245, 158, 11, 0.1);
     color: var(--text-secondary);
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .streak-count {
     font-weight: 700;
-    color: #F59E0B; /* Amber color */
+    color: #F59E0B;
 }
 
-/* --- Guided Exercises Modal --- */
 .exercise-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -888,12 +846,14 @@ main {
     align-self: flex-start;
     border-bottom-left-radius: 4px;
 }
+
 .exercise-message.user-message {
     background-color: var(--accent-primary);
     color: white;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
 }
+
 .exercise-message.system-message {
     align-self: center;
     text-align: center;
@@ -902,6 +862,7 @@ main {
     background: none;
     font-size: 0.9rem;
 }
+
 .exercise-message.error p {
     color: var(--error);
 }
@@ -928,20 +889,18 @@ main {
     font-weight: 600;
 }
 
-/* --- Progress Dashboard (Analytics) --- */
 .progress-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
-/* On larger screens, use a more complex grid for better layout. */
 @media (min-width: 768px) {
     .progress-grid {
-        grid-template-columns: 2fr 1fr; /* Make the line chart wider */
+        grid-template-columns: 2fr 1fr;
     }
     .progress-grid .chart-card:first-child {
-        grid-column: 1 / -1; /* Make the first chart (mood trend) span the full width */
+        grid-column: 1 / -1;
     }
 }
 
@@ -959,93 +918,74 @@ main {
     font-weight: 600;
 }
 
-/* ===================================================================================
-   --- 6. UTILITIES & RESPONSIVENESS ---
-   Helper classes and media queries for smaller screens.
-   =================================================================================== */
-
-/* A simple loading spinner animation. */
 .loading-indicator {
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-left-color: var(--accent-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-left-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+    to { transform: rotate(360deg); }
 }
 
-/* Notification pop-up styles. */
 .notification {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  animation: slideIn 0.3s ease-out forwards;
-  max-width: 300px;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out forwards;
+    max-width: 300px;
 }
 
 .notification.success {
-  border-left: 4px solid var(--success);
+    border-left: 4px solid var(--success);
 }
 
 .notification.error {
-  border-left: 4px solid var(--error);
+    border-left: 4px solid var(--error);
 }
 
 .notification.warning {
-  border-left: 4px solid var(--warning);
+    border-left: 4px solid var(--warning);
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 
-/* Media query for mobile devices. */
 @media (max-width: 768px) {
-  .message {
-    max-width: 90%;
-  }
-  
-  .auth-box {
-    width: 95%;
-  }
-
-  .journal-layout {
-      grid-template-columns: 1fr; /* Stack journal entry and calendar on mobile */
-  }
+    .message {
+        max-width: 90%;
+    }
+    .auth-box {
+        width: 95%;
+    }
+    .journal-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* --- FOOTER --- */
 footer {
-  margin-top: auto;
-  padding: 1rem 0;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+    padding: 1rem 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 footer p {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .post-header {
@@ -1060,7 +1000,7 @@ footer p {
     padding: 1rem;
     border-radius: var(--border-radius);
     min-height: 150px;
-    white-space: pre-wrap; /* Respects newlines in the journal entry */
+    white-space: pre-wrap;
     color: var(--text-secondary);
     margin-bottom: 1rem;
 }
@@ -1071,7 +1011,6 @@ footer p {
     gap: 1rem;
 }
 
-/* --- Styles for Screening Test Modal --- */
 .questionnaire-item {
     background-color: var(--bg-primary);
     padding: 1.5rem;
@@ -1110,10 +1049,9 @@ footer p {
 
 .questionnaire-options input[type="radio"] {
     margin-right: 0.75rem;
-    accent-color: var(--accent-primary); /* Styles the radio button itself */
+    accent-color: var(--accent-primary);
 }
 
-/* --- Forum Report Button Style --- */
 .btn-report {
     background: none;
     border: none;
