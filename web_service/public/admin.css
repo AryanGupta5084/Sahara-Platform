@@ -1,15 +1,6 @@
-/**
- * public/css/admin.css
- * * This stylesheet contains all the styles for the admin dashboard.
- * It's designed to be clean, responsive, and easy to navigate, with a dark theme.
- */
-
-/* --- CSS Variables (Theming) --- */
-/* Using CSS variables makes it super easy to manage the color scheme and layout constants. */
 :root {
     --sidebar-width: 200px;
     --header-height: 60px;
-    /* Re-using variables from the main style.css for consistency */
     --bg-primary: #1a1a2e;
     --bg-secondary: #16213e;
     --text-primary: #e0e0e0;
@@ -21,46 +12,39 @@
     --border-radius: 8px;
 }
 
-/* --- Main Layout --- */
-/* This sets up the main container for the entire admin panel. */
 .admin-container {
     display: flex;
-    flex-direction: column; /* Stack header on top of the main content */
-    min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+    flex-direction: column;
+    min-height: 100vh;
     background-color: var(--bg-primary);
 }
 
-/* --- Header --- */
-/* Styles for the top navigation bar. */
 .admin-header {
     display: flex;
-    justify-content: space-between; /* Pushes the title and user info to opposite ends */
-    align-items: center; /* Vertically centers everything */
+    justify-content: space-between;
+    align-items: center;
     padding: 0 1.5rem;
     height: var(--header-height);
     background-color: var(--bg-secondary);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .admin-user {
     display: flex;
     align-items: center;
-    gap: 1rem; /* Space between the username and logout button */
+    gap: 1rem;
 }
 
 .admin-user span {
     color: var(--accent-primary);
-    font-weight: 600; /* Make the username stand out */
+    font-weight: 600;
 }
 
-/* --- Content Layout (Sidebar + Main Area) --- */
-/* This creates the two-column layout for the navigation and the main content. */
 .admin-content {
     display: flex;
-    flex: 1; /* This makes the content area grow to fill the remaining space */
+    flex: 1;
 }
 
-/* --- Sidebar Navigation --- */
 .admin-sidebar {
     width: var(--sidebar-width);
     background-color: var(--bg-secondary);
@@ -72,7 +56,7 @@
 }
 
 .admin-sidebar ul {
-    list-style: none; /* Remove default bullet points */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -82,41 +66,37 @@
 }
 
 .admin-sidebar a {
-    display: block; /* Make the entire area clickable */
+    display: block;
     padding: 0.75rem 1.5rem;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    transition: all 0.3s ease;
 }
 
 .admin-sidebar a:hover {
-    background-color: rgba(59, 130, 246, 0.1); /* Subtle blue glow on hover */
+    background-color: rgba(59, 130, 246, 0.1);
     color: var(--text-primary);
 }
 
-/* Style for the currently active navigation link */
 .admin-sidebar a.active {
     background-color: rgba(59, 130, 246, 0.2);
     color: var(--accent-primary);
-    border-left: 3px solid var(--accent-primary); /* Highlight with a colored border */
+    border-left: 3px solid var(--accent-primary);
 }
 
-/* --- Main Content Area --- */
-/* This is where the tables, stats, and forms will live. */
 .admin-main {
-    flex: 1; /* Take up the rest of the horizontal space */
+    flex: 1;
     padding: 1.5rem;
-    overflow-y: auto; /* Allow scrolling if content is too tall */
+    overflow-y: auto;
 }
 
-/* We'll use JavaScript to toggle the 'active' class to show/hide sections. */
 .admin-section {
     display: none;
 }
 
 .admin-section.active {
     display: block;
-    animation: fadeIn 0.3s ease-in-out; /* Simple fade-in animation for a smoother feel */
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .admin-section h2 {
@@ -126,17 +106,16 @@
     font-size: 1.5rem;
 }
 
-/* --- Dashboard Stat Cards --- */
 .stats-cards {
     display: flex;
     gap: 1.5rem;
-    flex-wrap: wrap; /* Allow cards to wrap to the next line on smaller screens */
+    flex-wrap: wrap;
 }
 
 .stat-card {
-    flex: 1; /* Distribute space evenly among the cards */
-    min-width: 200px; /* Ensure cards don't get too squished */
-    background: linear-gradient(135deg, #2196f3, #1976d2); /* Nice blue gradient */
+    flex: 1;
+    min-width: 200px;
+    background: linear-gradient(135deg, #2196f3, #1976d2);
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
@@ -146,7 +125,7 @@
 }
 
 .stat-card:hover {
-    transform: translateY(-5px); /* Lift the card up on hover */
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
     background: linear-gradient(135deg, #1e88e5, #1565c0);
 }
@@ -168,9 +147,6 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-/* --- Table Styles --- */
-/* General styles for data tables used across the admin panel. */
 .admin-actions {
     display: flex;
     justify-content: space-between;
@@ -193,7 +169,7 @@
 }
 
 .table-container {
-    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+    overflow-x: auto;
     background-color: var(--bg-secondary);
     border-radius: var(--border-radius);
     margin-bottom: 1rem;
@@ -201,7 +177,7 @@
 
 table {
     width: 100%;
-    border-collapse: collapse; /* Clean, modern look for table borders */
+    border-collapse: collapse;
     text-align: left;
 }
 
@@ -220,7 +196,6 @@ td {
     color: var(--text-primary);
 }
 
-/* Remove the bottom border from the very last row in the table */
 tr:last-child td {
     border-bottom: none;
 }
@@ -236,7 +211,6 @@ tr:last-child td {
     gap: 0.5rem;
 }
 
-/* Icon buttons for edit/delete actions in tables */
 .btn-icon {
     background: none;
     border: none;
@@ -251,20 +225,33 @@ tr:last-child td {
     color: var(--text-primary);
 }
 
-.btn-icon.edit:hover { color: var(--accent-primary); }
-.btn-icon.delete:hover { color: var(--error); }
-.btn-icon.view:hover { color: var(--success); }
+.btn-icon.edit:hover {
+    color: var(--accent-primary);
+}
 
-.cell-actions { white-space: nowrap; }
-.cell-flagged { color: var(--warning); }
+.btn-icon.delete:hover {
+    color: var(--error);
+}
+
+.btn-icon.view:hover {
+    color: var(--success);
+}
+
+.cell-actions {
+    white-space: nowrap;
+}
+
+.cell-flagged {
+    color: var(--warning);
+}
+
 .cell-truncate {
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Use '...' for long text */
+    text-overflow: ellipsis;
 }
 
-/* --- Pagination --- */
 .pagination {
     display: flex;
     align-items: center;
@@ -286,17 +273,19 @@ tr:last-child td {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.pagination-btn:hover { background-color: rgba(59, 130, 246, 0.1); }
+.pagination-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
 .pagination-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-#paginationInfo { color: var(--text-secondary); }
+#paginationInfo {
+    color: var(--text-secondary);
+}
 
-
-/* --- Modal Styles --- */
-/* For pop-up dialogs, like viewing details or confirming actions. */
 .modal {
     display: flex;
     align-items: center;
@@ -306,7 +295,7 @@ tr:last-child td {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
@@ -340,15 +329,22 @@ tr:last-child td {
     align-items: center;
     justify-content: center;
     transition: color 0.2s ease;
-    z-index: 1; /* Make sure it's clickable */
+    z-index: 1;
 }
 
-.close-btn:hover { color: var(--text-primary); }
+.close-btn:hover {
+    color: var(--text-primary);
+}
 
-.chat-detail-header { margin-bottom: 1.5rem; padding-right: 2rem; }
-.chat-messages-container { margin-bottom: 1.5rem; }
+.chat-detail-header {
+    margin-bottom: 1.5rem;
+    padding-right: 2rem;
+}
 
-/* Styles for chat action forms within a modal */
+.chat-messages-container {
+    margin-bottom: 1.5rem;
+}
+
 .chat-actions {
     display: flex;
     flex-direction: column;
@@ -357,16 +353,34 @@ tr:last-child td {
     background: var(--bg-secondary);
     border-radius: 8px;
 }
-.chat-actions .form-group { display: flex; align-items: center; gap: 0.5rem; }
-.chat-actions label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-.chat-actions input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
-.chat-actions .btn { align-self: flex-end; min-width: 120px; }
 
+.chat-actions .form-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-/* --- Confirmation & Buttons --- */
+.chat-actions label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.chat-actions input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.chat-actions .btn {
+    align-self: flex-end;
+    min-width: 120px;
+}
+
 .modal-actions {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end;
     gap: 1rem;
     margin-top: 1.5rem;
 }
@@ -377,18 +391,35 @@ tr:last-child td {
     color: var(--accent-primary);
 }
 
-.secondary-btn:hover { background-color: rgba(59, 130, 246, 0.1); }
+.secondary-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
 
-.danger-btn { background-color: var(--error); color: white; }
-.danger-btn:hover { background-color: #f05252; }
+.danger-btn {
+    background-color: var(--error);
+    color: white;
+}
 
+.danger-btn:hover {
+    background-color: #f05252;
+}
 
-/* --- Form Elements (Checkboxes, Selects) --- */
-.checkbox-group { display: flex; align-items: center; }
-.checkbox-group label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
-.checkbox-group input { width: auto; }
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
 
-/* A nice-looking checkmark icon for the 'isAdmin' column in the user table. */
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
 .admin-tick {
     color: #2196f3;
     font-size: 1.4rem;
@@ -398,7 +429,6 @@ tr:last-child td {
     height: 100%;
 }
 
-/* Vertically and horizontally center the checkmark in its table cell. */
 #usersTableBody td:nth-child(4) {
     text-align: center;
     vertical-align: middle;
@@ -409,7 +439,6 @@ tr:last-child td {
     outline-offset: 2px;
 }
 
-/* Custom styled select dropdown */
 select {
     width: 100%;
     padding: 0.75rem;
@@ -417,8 +446,7 @@ select {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius);
     color: var(--text-primary);
-    appearance: none; /* Remove default browser arrow */
-    /* Add a custom arrow using an SVG */
+    appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
@@ -430,11 +458,15 @@ select:focus {
     border-color: var(--accent-primary);
 }
 
-/* A couple of helper classes for forms */
-.form-row { display: flex; gap: 1rem; }
-.form-row .form-group { flex: 1; }
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
 
-/* Badge styles for resource types */
+.form-row .form-group {
+    flex: 1;
+}
+
 .type-badge {
     display: inline-block;
     padding: 0.2rem 0.6rem;
@@ -444,15 +476,20 @@ select:focus {
     text-transform: capitalize;
     color: #fff;
 }
-.type-badge.type-article { background-color: var(--accent-primary); }
-.type-badge.type-video { background-color: var(--success); }
-.type-badge.type-audio { background-color: var(--warning); }
 
+.type-badge.type-article {
+    background-color: var(--accent-primary);
+}
 
-/* --- Responsive Styles --- */
-/* For screens 768px wide or smaller (like tablets and phones). */
+.type-badge.type-video {
+    background-color: var(--success);
+}
+
+.type-badge.type-audio {
+    background-color: var(--warning);
+}
+
 @media (max-width: 768px) {
-    /* Move the sidebar to the bottom of the screen to save vertical space. */
     .admin-sidebar {
         width: 100%;
         position: fixed;
@@ -461,28 +498,10 @@ select:focus {
         z-index: 10;
         border-right: none;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        height: auto; /* Let the content define the height */
+        height: auto;
     }
-
-    .admin-sidebar nav { padding: 0; }
-    .admin-sidebar ul {
-        display: flex;
-        justify-content: space-around; /* Space out the nav items evenly */
-    }
-    .admin-sidebar li { margin-bottom: 0; flex: 1; }
-    .admin-sidebar a { padding: 0.75rem 0; text-align: center; border-left: none; }
-    .admin-sidebar a.active {
-        border-left: none;
-        border-top: 3px solid var(--accent-primary); /* Use a top border for the active state */
-    }
-    .admin-content { flex-direction: column; }
-    /* Add padding to the bottom of the main content so the fixed nav bar doesn't overlap it. */
-    .admin-main { padding-bottom: 5rem; }
-    /* Stack the stat cards vertically on small screens. */
-    .stats-cards { flex-direction: column; }
 }
 
-/* --- Counselor Profile Management Styles --- */
 .profile-details {
     background-color: var(--bg-secondary);
     padding: 1rem 1.5rem;
@@ -491,7 +510,7 @@ select:focus {
 }
 
 .profile-details p {
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
 }
 
 #availabilityForm h3 {
@@ -514,7 +533,7 @@ select:focus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    width: 150px; /* Fixed width for alignment */
+    width: 150px;
     cursor: pointer;
 }
 
@@ -530,24 +549,18 @@ select:focus {
     margin-top: 1rem;
 }
 
-/* --- Styles for Admin Analytics Charts --- */
-/* This creates the responsive grid to hold the chart cards */
 .charts-grid {
     display: grid;
-    /* This creates a responsive grid that shows 1 column on small screens
-       and adds more columns as space becomes available. */
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
-    margin-top: 2rem; /* Add some space above the charts */
+    margin-top: 2rem;
 }
 
-/* This styles the container for each individual chart */
 .chart-card {
-    /* Use the same background as the data tables */
-    background-color: var(--bg-secondary); 
+    background-color: var(--bg-secondary);
     padding: 1.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .chart-card h3 {
@@ -556,22 +569,20 @@ select:focus {
     color: var(--text-secondary);
     font-size: 1rem;
     font-weight: 600;
-    text-transform: uppercase; /* Match other dashboard headings */
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* Ensure the canvas (the chart itself) is responsive */
 .chart-card canvas {
     max-height: 350px;
     width: 100% !important;
 }
 
-/* --- Style for Flagged Admin Rows --- */
 .table-container tbody tr.flagged-row {
-    background-color: rgba(221, 107, 32, 0.1); /* Subtle warning background */
+    background-color: rgba(221, 107, 32, 0.1);
     font-weight: 600;
 }
 
 .table-container tbody tr.flagged-row td:first-child {
-    border-left: 4px solid var(--warning); /* Highlight the row start */
+    border-left: 4px solid var(--warning);
 }
