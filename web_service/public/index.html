@@ -4,499 +4,390 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sahara | Mental Health Support</title>
-    <!-- Main stylesheet for the application's look and feel. -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Font Awesome for all the icons used throughout the app. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SEO-friendly description for search engines. -->
     <meta name="description" content="A supportive mental health chatbot designed to help with stress, anxiety, and emotional well-being">
-    <!-- Socket.IO client library, necessary for real-time features like live chat. -->
     <script src="/socket.io/socket.io.js"></script>
-    <meta name="description" content="A supportive mental health chatbot designed to help with stress, anxiety, and emotional well-being">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#3b82f6">
 </head>
 <body>
-    <!-- This is the main container that wraps the entire application. -->
-    <div class="app-container">
-        
-        <!-- ==================== HEADER ==================== -->
-        <header>
-            <div class="logo">
-                <i class="fa-solid fa-brain"></i>
-                <h1>Sahara</h1>
+<div class="app-container">
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-brain"></i>
+            <h1>Sahara</h1>
+        </div>
+        <div class="header-controls">
+            <button class="header-icon-btn" id="resourcesBtn" title="View Resources">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </button>
+            <div class="language-selector">
+                <label for="languageSelector"> </label>
+                <select id="languageSelector">
+                    <option value="en" selected>English</option>
+                    <option value="hi">ह िंदी (Hindi)</option>
+                    <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                    <option value="bn">বাাংলা (Bengali)</option>
+                    <option value="ta">தமிழ் (Tamil)</option>
+                    <option value="te">తెలుగు (Telugu)</option>
+                    <option value="ml">മലയാളം (Malayalam)</option>
+                    <option value="mr">मਰਾठी (Marathi)</option>
+                    <option value="gu">ગુજરાતી (Gujarati)</option>
+                    <option value="kn">ಕನ್ನ ಡ (Kannada)</option>
+                </select>
             </div>
-
-            <!-- This section holds all the interactive controls in the header. -->
-            <div class="header-controls">
-                <!-- Button to open the wellness resources modal. -->
-                <button class="header-icon-btn" id="resourcesBtn" title="View Resources">
-                    <i class="fa-solid fa-book-open-reader"></i>
+            <div class="user-menu" id="userMenu">
+                <button class="user-button" id="userButton">
+                    <i class="fa-solid fa-user"></i>
+                    <span id="username">Guest</span>
                 </button>
-
-                <!-- Dropdown for language selection. -->
-                <div class="language-selector">
-                    <label for="languageSelector">🌐</label>
-                    <select id="languageSelector">
-                        <option value="en" selected>English</option>
-                        <option value="hi">हिंदी (Hindi)</option>
-                        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
-                        <option value="bn">বাংলা (Bengali)</option>
-                        <option value="ta">தமிழ் (Tamil)</option>
-                        <option value="te">తెలుగు (Telugu)</option>
-                        <option value="ml">മലയാളം (Malayalam)</option>
-                        <option value="mr">मਰਾठी (Marathi)</option>
-                        <option value="gu">ગુજરાતી (Gujarati)</option>
-                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
-                    </select>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div id="streak-indicator" class="streak-indicator" style="display: none;">
+                        <span>Journal Streak</span>
+                        <span class="streak-count"> 0</span>
+                    </div>
+                    <button id="guestBtn">Continue as Guest</button>
+                    <button id="loginBtn">Login</button>
+                    <button id="registerBtn">Register</button>
+                    <button id="adminPanelBtn">Admin Panel</button>
+                    <button id="logoutBtn" style="display: none;">Logout</button>
+                    <div class="dropdown-divider" id="userActionsDivider" style="display: none;"></div>
+                    <button id="bookAppointmentBtn" style="display: none;"><i class="fa-solid fa-calendar-check"></i> Book Appointment</button>
+                    <button id="myAppointmentsBtn" style="display: none;"><i class="fa-solid fa-calendar-days"></i> My Appointments</button>
+                    <button id="forumBtn" style="display: none;"><i class="fa-solid fa-users"></i> Community Forum</button>
+                    <button id="journalBtn" style="display: none;"><i class="fa-solid fa-book-medical"></i> Daily Journal</button>
+                    <button id="exerciseBtn" style="display: none;"><i class="fa-solid fa-person-walking-luggage"></i> Guided Exercises</button>
+                    <button id="progressBtn" style="display: none;"><i class="fa-solid fa-chart-line"></i> My Progress</button>
+                    <button id="screeningBtn" style="display: none;"><i class="fa-solid fa-file-medical"></i> Screening Tests</button>
+                    <button id="clearHistoryBtn" style="display: none;"><i class="fa-solid fa-trash"></i>Clear History</button>
+                    <div class="dropdown-divider" id="sessionHistoryDivider" style="display: none;"></div>
+                    <div id="sessionHistoryContainer"></div>
                 </div>
-
-                <!-- User menu that shows login status and provides access to user-specific features. -->
-                <div class="user-menu" id="userMenu">
-                    <button class="user-button" id="userButton">
-                        <i class="fa-solid fa-user"></i>
-                        <span id="username">Guest</span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="authContainer" class="auth-container hidden">
+            <div class="auth-box">
+                <button class="close-btn" id="closeAuthBtn"><i class="fa-solid fa-times"></i></button>
+                <form id="loginForm" class="auth-form">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Login</button>
+                    <p class="form-switch">Don't have an account? <a href="#" id="showRegisterForm">Register</a></p>
+                </form>
+                <form id="registerForm" class="auth-form hidden">
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <label for="registerUsername">Username</label>
+                        <input type="text" id="registerUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required minlength="6">
+                        <small>Password must be at least 6 characters</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <div class="form-group checkbox-group" style="font-size: 0.8rem; text-align: left; margin-top: 1.5rem; align-items: flex-start;">
+                        <label for="registerTerms" style="display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5;">
+                            <input type="checkbox" id="registerTerms" style="width: auto; margin-top: 4px;" required>
+                            <span>I have read and agree to the <a href="#" class="legal-link" data-type="terms" style="color: var(--accent-primary);">Terms & Conditions</a> and the <a href="#" class="legal-link" data-type="privacy" style="color: var(--accent-primary);">Privacy Policy</a>.</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Register</button>
+                    <p class="form-switch">Already have an account? <a href="#" id="showLoginForm">Login</a></p>
+                </form>
+            </div>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>Hi there! I'm Sahara, your supportive mental health companion. How are you feeling today?</p>
+                    </div>
+                    <div class="message-time">Now</div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <form id="messageForm">
+                    <button type="button" id="micBtn" class="chat-icon-btn" title="Speak Message">
+                        <i class="fa-solid fa-microphone"></i>
                     </button>
-                    <!-- This dropdown is hidden by default and appears when the user button is clicked. -->
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <!-- Journaling streak, shown only for logged-in users. -->
-                        <div id="streak-indicator" class="streak-indicator" style="display: none;">
-                            <span>Journal Streak</span>
-                            <span class="streak-count">🔥 0</span>
-                        </div>
-                        <!-- Auth buttons for guests. -->
-                        <button id="guestBtn">Continue as Guest</button>
-                        <button id="loginBtn">Login</button>
-                        <button id="registerBtn">Register</button>
-                        <!-- Admin panel button, only visible to administrators. -->
-                        <button id="adminPanelBtn">Admin Panel</button>
-                        <!-- Logout button, shown only when a user is logged in. -->
-                        <button id="logoutBtn" style="display: none;">Logout</button>
-                        
-                        <!-- Divider and buttons for logged-in user actions. -->
-                        <div class="dropdown-divider" id="userActionsDivider" style="display: none;"></div>
-                        <button id="bookAppointmentBtn" style="display: none;"><i class="fa-solid fa-calendar-check"></i> Book Appointment</button>
-                        <button id="myAppointmentsBtn" style="display: none;"><i class="fa-solid fa-calendar-days"></i> My Appointments</button>
-                        <button id="forumBtn" style="display: none;"><i class="fa-solid fa-users"></i> Community Forum</button>
-                        <button id="journalBtn" style="display: none;"><i class="fa-solid fa-book-medical"></i> Daily Journal</button>
-                        <button id="exerciseBtn" style="display: none;"><i class="fa-solid fa-person-walking-luggage"></i> Guided Exercises</button>
-                        <button id="progressBtn" style="display: none;"><i class="fa-solid fa-chart-line"></i> My Progress</button>
-                        <button id="screeningBtn" style="display: none;"><i class="fa-solid fa-file-medical"></i> Screening Tests</button>
-
-                        <!-- Chat history management. -->
-                        <button id="clearHistoryBtn" style="display: none;"><i class="fa-solid fa-trash"></i>Clear History</button>
-                        <div class="dropdown-divider" id="sessionHistoryDivider" style="display: none;"></div>
-                        <div id="sessionHistoryContainer">
-                            <!-- User's past chat sessions will be listed here. -->
-                        </div>
-                    </div>
-                </div>
+                    <textarea id="messageInput" placeholder="Type your message here..." rows="1"></textarea>
+                    <button type="submit" id="sendButton">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <button type="button" id="ttsBtn" class="chat-icon-btn" title="Read responses aloud">
+                        <i class="fa-solid fa-volume-off"></i>
+                    </button>
+                </form>
             </div>
-        </header>
-
-        <!-- ==================== MAIN CONTENT AREA ==================== -->
-        <main>
-            <!-- Authentication modal for login and registration. Hidden by default. -->
-            <div id="authContainer" class="auth-container hidden">
-                <div class="auth-box">
-                    <button class="close-btn" id="closeAuthBtn"><i class="fa-solid fa-times"></i></button>
-                    
-                    <!-- Login Form -->
-                    <form id="loginForm" class="auth-form">
-                        <h2>Login</h2>
-                        <div class="form-group">
-                            <label for="loginEmail">Email</label>
-                            <input type="email" id="loginEmail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="loginPassword">Password</label>
-                            <input type="password" id="loginPassword" required>
-                        </div>
-                        <button type="submit" class="btn primary-btn">Login</button>
-                        <p class="form-switch">Don't have an account? <a href="#" id="showRegisterForm">Register</a></p>
-                    </form>
-                    
-                    <!-- Registration Form -->
-                    <form id="registerForm" class="auth-form hidden">
-                        <h2>Create Account</h2>
-                        <div class="form-group">
-                            <label for="registerUsername">Username</label>
-                            <input type="text" id="registerUsername" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerEmail">Email</label>
-                            <input type="email" id="registerEmail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="registerPassword">Password</label>
-                            <input type="password" id="registerPassword" required minlength="6">
-                            <small>Password must be at least 6 characters</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" id="confirmPassword" required>
-                        </div>
-                        <div class="form-group checkbox-group" style="font-size: 0.8rem; text-align: left; margin-top: 1.5rem; align-items: flex-start;">
-                            <label for="registerTerms" style="display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5;">
-                                <input type="checkbox" id="registerTerms" style="width: auto; margin-top: 4px;" required>
-                                <span>I have read and agree to the 
-                                    <a href="#" class="legal-link" data-type="terms" style="color: var(--accent-primary);">Terms & Conditions</a> 
-                                    and the 
-                                    <a href="#" class="legal-link" data-type="privacy" style="color: var(--accent-primary);">Privacy Policy</a>.
-                                </span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn primary-btn">Register</button>
-                        <p class="form-switch">Already have an account? <a href="#" id="showLoginForm">Login</a></p>
-                    </form>
-                </div>
+        </div>
+    </main>
+    <footer>
+        <p><strong>Important:</strong> Ensure professional consultation for accurate mental health support. Chatbots can supplement, but not replace, medical expertise or therapy.</p>
+    </footer>
+</div>
+<div id="bookingModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeBookingModalBtn"><i class="fa-solid fa-times"></i></button>
+        <div id="booking-step-1" class="booking-step">
+            <h2>Select a Counselor</h2>
+            <div id="counselor-selection-container" class="counselor-grid"></div>
+        </div>
+        <div id="booking-step-2" class="booking-step hidden">
+            <button class="back-btn" id="bookingBackBtn"><i class="fa-solid fa-arrow-left"></i> Back to Counselors</button>
+            <h2>Select a Date & Time</h2>
+            <p>Available slots for <strong id="selected-counselor-name"></strong>:</p>
+            <div class="slot-selection-controls">
+                <input type="date" id="slot-date-picker">
             </div>
-
-            <!-- The main chat interface. -->
-            <div class="chat-container">
-                <!-- This div is where all chat messages will be displayed. -->
-                <div class="chat-messages" id="chatMessages">
-                    <!-- Initial welcome message from the bot. -->
-                    <div class="message bot-message">
-                        <div class="message-content">
-                            <p>Hi there! I'm Sahara, your supportive mental health companion. How are you feeling today?</p>
-                        </div>
-                        <div class="message-time">Now</div>
-                    </div>
-                </div>
-                
-                <!-- The form for user input. -->
-                <div class="chat-input-container">
-                    <form id="messageForm">
-                        <!-- Microphone button for speech-to-text input. -->
-                        <button type="button" id="micBtn" class="chat-icon-btn" title="Speak Message">
-                            <i class="fa-solid fa-microphone"></i>
-                        </button>
-
-                        <!-- The main text area for typing messages. It auto-resizes. -->
-                        <textarea id="messageInput" placeholder="Type your message here..." rows="1"></textarea>
-
-                        <!-- The send button. -->
-                        <button type="submit" id="sendButton">
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-
-                        <!-- Text-to-speech button to read bot responses aloud. -->
-                        <button type="button" id="ttsBtn" class="chat-icon-btn" title="Read responses aloud">
-                            <i class="fa-solid fa-volume-off"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </main>
-
-        <!-- ==================== FOOTER ==================== -->
-        <footer>
-            <p>
-                <strong>Important:</strong> Ensure professional consultation for accurate mental health support. Chatbots can supplement, but not replace, medical expertise or therapy.
-            </p>
-        </footer>
-    </div>
-
-    <!-- ==================== MODALS ==================== -->
-    <!-- Modals are pop-up windows for specific features. They are all hidden by default. -->
-
-    <!-- Booking Modal: A multi-step process for booking appointments. -->
-    <div id="bookingModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeBookingModalBtn"><i class="fa-solid fa-times"></i></button>
-            <!-- Step 1: Choose a counselor. -->
-            <div id="booking-step-1" class="booking-step">
-                <h2>Select a Counselor</h2>
-                <div id="counselor-selection-container" class="counselor-grid"></div>
-            </div>
-            <!-- Step 2: Pick a date and time slot. -->
-            <div id="booking-step-2" class="booking-step hidden">
-                <button class="back-btn" id="bookingBackBtn"><i class="fa-solid fa-arrow-left"></i> Back to Counselors</button>
-                <h2>Select a Date & Time</h2>
-                <p>Available slots for <strong id="selected-counselor-name"></strong>:</p>
-                <div class="slot-selection-controls">
-                    <input type="date" id="slot-date-picker">
-                </div>
-                <div id="slot-selection-container" class="slot-grid"></div>
-            </div>
-            <!-- Step 3: Confirm the details. -->
-            <div id="booking-step-3" class="booking-step hidden">
-                <h2>Confirm Your Appointment</h2>
-                <div id="booking-confirmation-details" class="booking-summary"></div>
-                <div class="booking-actions">
-                    <button id="confirmBookingBtn" class="btn primary-btn">Confirm Booking</button>
-                </div>
+            <div id="slot-selection-container" class="slot-grid"></div>
+        </div>
+        <div id="booking-step-3" class="booking-step hidden">
+            <h2>Confirm Your Appointment</h2>
+            <div id="booking-confirmation-details" class="booking-summary"></div>
+            <div class="booking-actions">
+                <button id="confirmBookingBtn" class="btn primary-btn">Confirm Booking</button>
             </div>
         </div>
     </div>
-    
-    <!-- My Appointments Modal: Displays a list of the user's booked appointments. -->
-    <div id="myAppointmentsModal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn" id="closeMyAppointmentsModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2>My Appointments</h2>
-            <div id="myAppointmentsContainer">
-                <div class="appointment-list-section">
-                    <h3>Upcoming</h3>
-                    <div id="upcomingAppointmentsContainer">
-                        </div>
-                </div>
-                <div class="appointment-list-section">
-                    <h3>Past</h3>
-                    <div id="pastAppointmentsContainer">
-                        </div>
-                </div>
+</div>
+<div id="myAppointmentsModal" class="modal hidden">
+    <div class="modal-content">
+        <button class="close-btn" id="closeMyAppointmentsModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2>My Appointments</h2>
+        <div id="myAppointmentsContainer">
+            <div class="appointment-list-section">
+                <h3>Upcoming</h3>
+                <div id="upcomingAppointmentsContainer"></div>
+            </div>
+            <div class="appointment-list-section">
+                <h3>Past</h3>
+                <div id="pastAppointmentsContainer"></div>
             </div>
         </div>
     </div>
-
-    <!-- Resources Modal: Shows a filterable list of helpful articles, videos, etc. -->
-    <div id="resourcesModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeResourcesModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2>Wellness Resources</h2>
-            <div class="resources-filters">
-                <p>Filter by language and add a tag to narrow your search (e.g., stress, anxiety).</p>
-                <div class="form-group" style="margin: 1rem 0 0 0;">
-                    <input type="text" id="resourceTagInput" placeholder="Enter tag to filter (e.g., stress)" 
-                           style="width: 100%; padding: 0.75rem; background-color: var(--bg-primary); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--border-radius); color: var(--text-primary);">
-                </div>
+</div>
+<div id="resourcesModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeResourcesModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2>Wellness Resources</h2>
+        <div class="resources-filters">
+            <p>Filter by language and add a tag to narrow your search (e.g., stress, anxiety).</p>
+            <div class="form-group" style="margin: 1rem 0 0 0;">
+                <input type="text" id="resourceTagInput" placeholder="Enter tag to filter (e.g., stress)" style="width: 100%; padding: 0.75rem; background-color: var(--bg-primary); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--border-radius); color: var(--text-primary);">
             </div>
-            <div id="resourcesContainer" class="resources-grid"></div>
         </div>
+        <div id="resourcesContainer" class="resources-grid"></div>
     </div>
-
-    <!-- Forum Modal: Contains the different views for the community forum. -->
-    <div id="forumModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeForumModalBtn"><i class="fa-solid fa-times"></i></button>
-            
-            <!-- View 1: List of all forum posts. -->
-            <div id="forum-list-view">
-                <div class="forum-header">
-                    <h2>Community Forum</h2>
-                    <button id="createNewPostBtn" class="btn primary-btn">Create New Post</button>
-                </div>
-                <div id="forum-posts-container" class="posts-container"></div>
+</div>
+<div id="forumModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeForumModalBtn"><i class="fa-solid fa-times"></i></button>
+        <div id="forum-list-view">
+            <div class="forum-header">
+                <h2>Community Forum</h2>
+                <button id="createNewPostBtn" class="btn primary-btn">Create New Post</button>
             </div>
-
-            <!-- View 2: A single post and its comments. -->
-            <div id="forum-detail-view" class="hidden">
-                <button class="back-btn" id="backToPostsBtn"><i class="fa-solid fa-arrow-left"></i> Back to All Posts</button>
-                <div id="forum-single-post-container"></div>
-                <div id="forum-comments-container"></div>
-                <div class="comment-form-container">
-                    <form id="commentForm">
-                        <h3>Leave a Comment</h3>
-                        <input type="hidden" id="commentPostId">
-                        <div class="form-group">
-                            <textarea id="commentContent" rows="3" placeholder="Write your supportive comment..." required></textarea>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <label><input type="checkbox" id="commentIsAnonymous"> Post Anonymously</label>
-                        </div>
-                        <button type="submit" class="btn primary-btn">Submit Comment</button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- View 3: The form for creating a new post. -->
-            <div id="forum-create-view" class="hidden">
-                <button class="back-btn" id="backFromCreateBtn"><i class="fa-solid fa-arrow-left"></i> Back to All Posts</button>
-                <h2>Create a New Post</h2>
-                <form id="createPostForm">
+            <div id="forum-posts-container" class="posts-container"></div>
+        </div>
+        <div id="forum-detail-view" class="hidden">
+            <button class="back-btn" id="backToPostsBtn"><i class="fa-solid fa-arrow-left"></i> Back to All Posts</button>
+            <div id="forum-single-post-container"></div>
+            <div id="forum-comments-container"></div>
+            <div class="comment-form-container">
+                <form id="commentForm">
+                    <h3>Leave a Comment</h3>
+                    <input type="hidden" id="commentPostId">
                     <div class="form-group">
-                        <label for="postTitle">Title</label>
-                        <input type="text" id="postTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Content</label>
-                        <textarea id="postContent" rows="5" placeholder="Share your thoughts or ask a question..." required></textarea>
+                        <textarea id="commentContent" rows="3" placeholder="Write your supportive comment..." required></textarea>
                     </div>
                     <div class="form-group checkbox-group">
-                        <label><input type="checkbox" id="postIsAnonymous"> Post Anonymously</label>
+                        <label><input type="checkbox" id="commentIsAnonymous"> Post Anonymously</label>
                     </div>
-                    <button type="submit" class="btn primary-btn">Create Post</button>
+                    <button type="submit" class="btn primary-btn">Submit Comment</button>
                 </form>
             </div>
         </div>
-    </div>
-    
-    <!-- Journal Modal: A two-column layout for writing entries and viewing the mood calendar. -->
-    <div id="journalModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeJournalModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2>Your Daily Journal</h2>
-            <div class="journal-layout">
-                <!-- Left side: The form for today's entry. -->
-                <div class="journal-entry-section">
-                    <h3>How are you feeling today?</h3>
-                    <form id="journalForm">
-                        <div class="mood-selector">
-                            <div class="mood-option" data-mood="awful" title="Awful">😞</div>
-                            <div class="mood-option" data-mood="bad" title="Bad">😟</div>
-                            <div class="mood-option" data-mood="meh" title="Meh">😐</div>
-                            <div class="mood-option" data-mood="good" title="Good">😊</div>
-                            <div class="mood-option" data-mood="great" title="Great">😄</div>
-                        </div>
-                        <input type="hidden" id="selectedMood" required>
-                        <div class="form-group">
-                            <label for="journalContent">Write about your day...</label>
-                            <textarea id="journalContent" rows="8" placeholder="What's on your mind? Writing it down can help." required></textarea>
-                            <small>Your entry is encrypted and private.</small>
-                        </div>
-                        <button type="submit" class="btn primary-btn">Save Today's Entry</button>
-                    </form>
-                    <!-- This message appears if the user has already journaled today. -->
-                    <div id="journal-today-message" class="hidden">
-                        <p>You've already saved your entry for today. Great job on staying consistent! Come back tomorrow to add a new one.</p>
-                    </div>
-                    <div id="journal-view-mode" class="hidden">
-                        <h3>Entry for <span id="journalViewDate"></span></h3>
-                        <p id="journalViewContent" class="journal-content-view"></p>
-                        <button id="deleteJournalEntryBtn" class="btn danger-btn">Delete this Entry</button>
-                        <button id="backToJournalFormBtn" class="btn secondary-btn">Write Today's Entry</button>
-                    </div>
+        <div id="forum-create-view" class="hidden">
+            <button class="back-btn" id="backFromCreateBtn"><i class="fa-solid fa-arrow-left"></i> Back to All Posts</button>
+            <h2>Create a New Post</h2>
+            <form id="createPostForm">
+                <div class="form-group">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle" required>
                 </div>
-                <!-- Right side: The calendar showing past moods. -->
-                <div class="journal-progress-section">
-                    <h3>Your Mood Calendar</h3>
-                    <div class="calendar-nav">
-                        <button id="prevMonthBtn">&lt;</button>
-                        <h4 id="currentMonthYear">September 2025</h4>
-                        <button id="nextMonthBtn">&gt;</button>
-                    </div>
-                    <div id="moodCalendar" class="calendar-grid"></div>
+                <div class="form-group">
+                    <label for="postContent">Content</label>
+                    <textarea id="postContent" rows="5" placeholder="Share your thoughts or ask a question..." required></textarea>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Exercise Modal: A container for the guided CBT/mindfulness exercises. -->
-    <div id="exerciseModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeExerciseModalBtn"><i class="fa-solid fa-times"></i></button>
-            
-            <div id="exercise-list-view">
-                <h2>Guided Exercises</h2>
-                <p>Select an exercise to begin your guided session. These are interactive, step-by-step practices to help you manage your thoughts and feelings.</p>
-                <div id="exercise-list-container" class="exercise-grid" style="margin-top: 1.5rem;">
-                    </div>
-            </div>
-
-            <div id="exercise-session-view" class="hidden">
-                <button class="back-btn" id="backToExerciseListBtn"><i class="fa-solid fa-arrow-left"></i> Back to Exercises</button>
-                <h2 id="exercise-session-title" style="text-align: center;">Exercise Title</h2>
-                
-                <div class="exercise-chat-container">
-                    <div id="exercise-messages">
-                        </div>
+                <div class="form-group checkbox-group">
+                    <label><input type="checkbox" id="postIsAnonymous"> Post Anonymously</label>
                 </div>
-                
-                <form id="exerciseResponseForm" class="exercise-input-form">
-                    <input type="text" id="exerciseResponseInput" placeholder="Type your thoughts here..." required autocomplete="off">
-                    <button type="submit" class="btn primary-btn">Send</button>
-                </form>
-                
-                <div id="exercise-complete-message" class="hidden">
-                    <p>You've completed the exercise. Take a moment to reflect on your thoughts. Well done!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Progress Modal: Displays charts showing the user's wellness trends. -->
-    <div id="progressModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeProgressModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2>Your Wellness Progress</h2>
-            <div id="progress-container" class="progress-grid">
-                <div class="chart-card">
-                    <h3>Mood Trend (Last 30 Days)</h3>
-                    <canvas id="moodTrendChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Overall Mood Distribution</h3>
-                    <canvas id="moodDistributionChart"></canvas>
-                </div>
-                <div class="chart-card">
-                    <h3>Journal Sentiment Analysis</h3>
-                    <canvas id="sentimentDistributionChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Live Chat Modal: For real-time sessions between a user and a counselor. -->
-    <div id="liveChatModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeLiveChatModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2 id="liveChatHeader">Live Session</h2>
-            <div class="exercise-chat-container" style="height: 60vh;">
-                <div id="liveChatMessages"></div>
-            </div>
-            <form id="liveChatForm" class="exercise-input-form">
-                <input type="text" id="liveChatMessageInput" placeholder="Type your message..." required autocomplete="off">
-                <button type="submit" class="btn primary-btn">Send</button>
+                <button type="submit" class="btn primary-btn">Create Post</button>
             </form>
         </div>
     </div>
-
-    <div id="screeningModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeScreeningModalBtn"><i class="fa-solid fa-times"></i></button>
-
-            <div id="screening-list-view">
-                <h2>Screening Tests</h2>
-                <p>These are confidential, standardized screening tools to help you understand your feelings. Your results are private and can help you track your well-being.</p>
-                <div id="screening-list-container" class="exercise-grid" style="margin-top: 1.5rem;">
+</div>
+<div id="journalModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeJournalModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2>Your Daily Journal</h2>
+        <div class="journal-layout">
+            <div class="journal-entry-section">
+                <h3>How are you feeling today?</h3>
+                <form id="journalForm">
+                    <div class="mood-selector">
+                        <div class="mood-option" data-mood="awful" title="Awful"> </div>
+                        <div class="mood-option" data-mood="bad" title="Bad"> </div>
+                        <div class="mood-option" data-mood="meh" title="Meh"> </div>
+                        <div class="mood-option" data-mood="good" title="Good"> </div>
+                        <div class="mood-option" data-mood="great" title="Great"> </div>
                     </div>
-            </div>
-
-            <div id="screening-test-view" class="hidden">
-                <button class="back-btn" id="backToScreeningListBtn"><i class="fa-solid fa-arrow-left"></i> Back to Tests</button>
-                <h2 id="screening-test-title">Loading Test...</h2>
-                <p id="screening-test-description" style="color: var(--text-secondary); margin-bottom: 1.5rem;"></p>
-
-                <form id="screeningTestForm">
-                    <div id="screening-questions-container"></div>
-                    <button type="submit" class="btn primary-btn" style="margin-top: 1rem;">Submit & View Score</button>
+                    <input type="hidden" id="selectedMood" required>
+                    <div class="form-group">
+                        <label for="journalContent">Write about your day...</label>
+                        <textarea id="journalContent" rows="8" placeholder="What's on your mind? Writing it down can help." required></textarea>
+                        <small>Your entry is encrypted and private.</small>
+                    </div>
+                    <button type="submit" class="btn primary-btn">Save Today's Entry</button>
                 </form>
-            </div>
-
-            <div id="screening-results-view" class="hidden">
-                <h2>Your Results</h2>
-                <div class="booking-summary" style="text-align: center;">
-                    <p>Your Total Score:</p>
-                    <h1 id="screening-result-score" style="font-size: 3rem; color: var(--accent-primary); margin: 0.5rem 0;">0</h1>
-                    <h3 id="screening-result-interpretation" style="color: white; margin-bottom: 1rem;"></h3>
-                    <p id="screening-result-recommendation" style="color: var(--text-secondary);"></p>
-                    <p id="screening-result-escalation" class="hidden" style="color: var(--warning); font-weight: 600; margin-top: 1rem;">
-                        Based on your results, we strongly recommend you speak with a professional.
-                    </p>
+                <div id="journal-today-message" class="hidden">
+                    <p>You've already saved your entry for today. Great job on staying consistent! Come back tomorrow to add a new one.</p>
                 </div>
-                <button class="btn primary-btn" id="closeScreeningResultsBtn" style="margin-top: 1.5rem;">Done</button>
+                <div id="journal-view-mode" class="hidden">
+                    <h3>Entry for <span id="journalViewDate"></span></h3>
+                    <p id="journalViewContent" class="journal-content-view"></p>
+                    <button id="deleteJournalEntryBtn" class="btn danger-btn">Delete this Entry</button>
+                    <button id="backToJournalFormBtn" class="btn secondary-btn">Write Today's Entry</button>
+                </div>
+            </div>
+            <div class="journal-progress-section">
+                <h3>Your Mood Calendar</h3>
+                <div class="calendar-nav">
+                    <button id="prevMonthBtn">&lt;</button>
+                    <h4 id="currentMonthYear">September 2025</h4>
+                    <button id="nextMonthBtn">&gt;</button>
+                </div>
+                <div id="moodCalendar" class="calendar-grid"></div>
             </div>
         </div>
     </div>
-    
-    <div id="legalModal" class="modal hidden">
-        <div class="modal-content large">
-            <button class="close-btn" id="closeLegalModalBtn"><i class="fa-solid fa-times"></i></button>
-            <h2 id="legalModalTitle">Legal Information</h2>
-            <div id="legalModalBody" style="max-height: 60vh; overflow-y: auto; background: var(--bg-primary); padding: 1rem 1.5rem; border-radius: var(--border-radius); color: var(--text-secondary); line-height: 1.7;">
-                </div>
+</div>
+<div id="exerciseModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeExerciseModalBtn"><i class="fa-solid fa-times"></i></button>
+        <div id="exercise-list-view">
+            <h2>Guided Exercises</h2>
+            <p>Select an exercise to begin your guided session. These are interactive, step-by-step practices to help you manage your thoughts and feelings.</p>
+            <div id="exercise-list-container" class="exercise-grid" style="margin-top: 1.5rem;"></div>
+        </div>
+        <div id="exercise-session-view" class="hidden">
+            <button class="back-btn" id="backToExerciseListBtn"><i class="fa-solid fa-arrow-left"></i> Back to Exercises</button>
+            <h2 id="exercise-session-title" style="text-align: center;">Exercise Title</h2>
+            <div class="exercise-chat-container">
+                <div id="exercise-messages"></div>
+            </div>
+            <form id="exerciseResponseForm" class="exercise-input-form">
+                <input type="text" id="exerciseResponseInput" placeholder="Type your thoughts here..." required autocomplete="off">
+                <button type="submit" class="btn primary-btn">Send</button>
+            </form>
+            <div id="exercise-complete-message" class="hidden">
+                <p>You've completed the exercise. Take a moment to reflect on your thoughts. Well done!</p>
+            </div>
         </div>
     </div>
-
-    <!-- This is a small, temporary notification element for showing feedback to the user. -->
-    <div id="notification" class="notification hidden"></div>
-
-    <!-- ==================== SCRIPTS ==================== -->
-    <!-- The main JavaScript file that brings all the interactivity to life. -->
-    <script src="script.js"></script>
-    <!-- We include the Chart.js library to render the progress charts. -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</div>
+<div id="progressModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeProgressModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2>Your Wellness Progress</h2>
+        <div id="progress-container" class="progress-grid">
+            <div class="chart-card">
+                <h3>Mood Trend (Last 30 Days)</h3>
+                <canvas id="moodTrendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Overall Mood Distribution</h3>
+                <canvas id="moodDistributionChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Journal Sentiment Analysis</h3>
+                <canvas id="sentimentDistributionChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="liveChatModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeLiveChatModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2 id="liveChatHeader">Live Session</h2>
+        <div class="exercise-chat-container" style="height: 60vh;">
+            <div id="liveChatMessages"></div>
+        </div>
+        <form id="liveChatForm" class="exercise-input-form">
+            <input type="text" id="liveChatMessageInput" placeholder="Type your message..." required autocomplete="off">
+            <button type="submit" class="btn primary-btn">Send</button>
+        </form>
+    </div>
+</div>
+<div id="screeningModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeScreeningModalBtn"><i class="fa-solid fa-times"></i></button>
+        <div id="screening-list-view">
+            <h2>Screening Tests</h2>
+            <p>These are confidential, standardized screening tools to help you understand your feelings. Your results are private and can help you track your well-being.</p>
+            <div id="screening-list-container" class="exercise-grid" style="margin-top: 1.5rem;"></div>
+        </div>
+        <div id="screening-test-view" class="hidden">
+            <button class="back-btn" id="backToScreeningListBtn"><i class="fa-solid fa-arrow-left"></i> Back to Tests</button>
+            <h2 id="screening-test-title">Loading Test...</h2>
+            <p id="screening-test-description" style="color: var(--text-secondary); margin-bottom: 1.5rem;"></p>
+            <form id="screeningTestForm">
+                <div id="screening-questions-container"></div>
+                <button type="submit" class="btn primary-btn" style="margin-top: 1rem;">Submit & View Score</button>
+            </form>
+        </div>
+        <div id="screening-results-view" class="hidden">
+            <h2>Your Results</h2>
+            <div class="booking-summary" style="text-align: center;">
+                <p>Your Total Score:</p>
+                <h1 id="screening-result-score" style="font-size: 3rem; color: var(--accent-primary); margin: 0.5rem 0;">0</h1>
+                <h3 id="screening-result-interpretation" style="color: white; margin-bottom: 1rem;"></h3>
+                <p id="screening-result-recommendation" style="color: var(--text-secondary);"></p>
+                <p id="screening-result-escalation" class="hidden" style="color: var(--warning); font-weight: 600; margin-top: 1rem;">
+                    Based on your results, we strongly recommend you speak with a professional.
+                </p>
+            </div>
+            <button class="btn primary-btn" id="closeScreeningResultsBtn" style="margin-top: 1.5rem;">Done</button>
+        </div>
+    </div>
+</div>
+<div id="legalModal" class="modal hidden">
+    <div class="modal-content large">
+        <button class="close-btn" id="closeLegalModalBtn"><i class="fa-solid fa-times"></i></button>
+        <h2 id="legalModalTitle">Legal Information</h2>
+        <div id="legalModalBody" style="max-height: 60vh; overflow-y: auto; background: var(--bg-primary); padding: 1rem 1.5rem; border-radius: var(--border-radius); color: var(--text-secondary); line-height: 1.7;"></div>
+    </div>
+</div>
+<div id="notification" class="notification hidden"></div>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
